@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Add New Snippet</title>
+  </head>
+  <body>
+    <div class="container">
+      <fieldset>
+        <h1>Add Code Snippet</h1>
+        <form class="new-snippet" action="/new_snippet" method="post">
+          <p>
+            <label for="title">Title:</label>
+            <input type="text" name="title" value="" placeholder="Please Enter Title" autofocus>
+          </p>
+          <p>
+            <label for="body">Body:</label>
+            <textarea name="body" rows="8" cols="80" placeholder="Enter Code Snippet Here"></textarea>
+          </p>
+          <p>
+            <label for="notes">Notes:</label>
+            <textarea name="notes" rows="8" cols="80" placeholder="Enter Notes Here"></textarea>
+          </p>
+          <p>
+            <label for="language">Language:</label>
+            <input type="text" name="language" value="" placeholder="Enter Language Here">
+          </p>
+          <p>
+            <label for="tags">Tags:</label>
+            <input type="text" name="tags" value="" placeholder="Enter Tags Here">
+          </p>
+          <p>
+            <button type="submit" name="button">Add Entry</button>
+          </p>
+
+        </form>
+      </fieldset>
+
+    </div>
+
+  </body>
+</html>
