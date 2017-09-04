@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>User Profile</title>
+  </head>
+  <body>
+    {{#user}}
+    <h1>Code Snippets of {{username}}</h1>
+    <ul>
+      {{#snippet}}
+      <li>
+        <a href="/{{_id}}/{{snippet.title}}">{{snippet.title}}</a>
+      </li>
+      {{/snippet}}
+    </ul>
+
+  </body>
+</html>
