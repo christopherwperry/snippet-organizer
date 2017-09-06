@@ -3,15 +3,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Add New Snippet</title>
+    <title>Edit Snippet</title>
     <link rel="stylesheet" href="https://cdn.shoelace.style/1.0.0-beta20/shoelace.css">
     <link rel="stylesheet" type="text/css" href="style.css"/>
   </head>
   <body>
     <div class="container">
       <fieldset>
-        <h1 class="page-title">Add Code Snippet</h1>
-        <form class="new-snippet" action="/new_snippet" method="post">
+        <h1 class="page-title">Edit Code Snippet</h1>
+        {{#snippet}}
+        <form class="new-snippet" action="/{{title}}/edit" method="post">
           <p>
             <label for="author">Author:</label>
             <input type="text" name="author"
@@ -19,28 +20,29 @@
           </p>
           <p>
             <label for="title">Title:</label>
-            <input type="text" name="title" value="" placeholder="Please Enter Title" autofocus>
+            <input type="text" name="title" value="{{title}}" placeholder="Please Enter Title" autofocus>
           </p>
           <p>
             <label for="body">Body:</label>
-            <textarea name="body" rows="8" cols="80" placeholder="Enter Code Snippet Here"></textarea>
+            <textarea name="body" rows="8" cols="80" placeholder="Enter Code Snippet Here">{{body}}</textarea>
           </p>
           <p>
             <label for="notes">Notes:</label>
-            <textarea name="notes" rows="8" cols="80" placeholder="Enter Notes Here"></textarea>
+            <textarea name="notes" rows="8" cols="80" placeholder="Enter Notes Here">{{notes}}</textarea>
           </p>
           <p>
             <label for="language">Language:</label>
-            <input type="text" name="language" value="" placeholder="Enter Language Here">
+            <input type="text" name="language" value="{{language}}" placeholder="Enter Language Here">
           </p>
           <p>
             <label for="tags">Tags:</label>
-            <input type="text" name="tags" value="" placeholder="Enter Tags Here">
+            <input type="text" name="tags" value="{{tags}}" placeholder="Enter Tags Here">
           </p>
           <p>
-            <button type="submit" name="button">Add Entry</button>
+            <button type="submit" name="button">Update Code Snippet</button>
           </p>
         </form>
+        {{/snippet}}
         <p>
           <a class="button" href="/">Go Back Home</a>
         </p>

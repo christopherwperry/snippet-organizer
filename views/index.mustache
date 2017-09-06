@@ -2,18 +2,30 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>User Profile</title>
+    <link rel="stylesheet" href="https://cdn.shoelace.style/1.0.0-beta20/shoelace.css">
+    <link rel="stylesheet" type="text/css" href="style.css"/>
   </head>
   <body>
-    {{#user}}
-    <h1>Code Snippets of {{username}}</h1>
-    <ul>
-      {{#snippet}}
-      <li>
-        <a href="/{{_id}}/{{snippet.title}}">{{snippet.title}}</a>
-      </li>
-      {{/snippet}}
-    </ul>
+    <div class="container">
+      {{#user}}
+      <h1 class="page-title">Code Snippets By <strong>{{username}}<strong></h1>
+      <ul>
+        {{#snippets}}
+        <li>
+          <a href="/{{title}}">{{title}}</a>
+        </li>
+        {{/snippets}}
+      </ul>
 
+      {{/user}}
+      <p>
+        <a class="button" href="/new_snippet">Add New Snippet</a>
+      </p>
+      <p>
+        <a class="button" href="/logout/">Logout</a>
+      </p>
+    </div>
   </body>
 </html>

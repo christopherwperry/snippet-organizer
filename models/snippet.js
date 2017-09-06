@@ -1,10 +1,25 @@
 const mongoose = require('mongoose');
 
 const snippetSchema = new mongoose.Schema({
-  title: {type: String, required: true, lowercase: true, unique: true},
-  body: {type: String, required: true},
-  notes: {type: String},
-  language: {type: String, required: true},
+  author: {
+    type: String,
+    required: true
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  body: {
+    type: String,
+    required: true
+  },
+  notes: {
+    type: String
+  },
+  language: {
+    type: String,
+    required: true
+  },
   tags:[String]
 })
 

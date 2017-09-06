@@ -1,0 +1,10 @@
+.body {
+  text-align: center;
+}
+
+.container {
+  max-width: 50rem;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  text-align: center;
+}

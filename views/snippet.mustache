@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Snippet Page</title>
+    <link rel="stylesheet" href="https://cdn.shoelace.style/1.0.0-beta20/shoelace.css">
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+  </head>
+  <body>
+    <div class="container">
+      <fieldset>
+        {{#snippet}}
+        <h1 class="page-title">{{title}}</h1>
+        <br>
+        <p>Body: {{body}}</p>
+        <p>Notes: {{notes}}</p>
+        <p>Language: {{language}}</p>
+        <p>Tags: {{tags}}</p>
+        <p>
+          <a href="/{{title}}/edit">Edit Snippet</a>
+        </p>
+        <form class="delete" action="/{{title}}/delete" method="post">
+          <button type="submit" name="button">Delete Snippet</button>
+        </form>
+        {{/snippet}}
+        <br>
+        <p>
+          <a class="button" href="/">Go Back Home</a>
+        </p>
+      </fieldset>
+    </div>
+  </body>
+</html>

@@ -2,23 +2,36 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login Page</title>
+    <link rel="stylesheet" href="https://cdn.shoelace.style/1.0.0-beta20/shoelace.css">
+    <link rel="stylesheet" type="text/css" href="style.css"/>
   </head>
   <body>
-    <h1>Enter Login Information</h1>
+
     <div class="container">
+      <br>
+      <h1 class="page-title middle">Enter Login Information</h1>
+      {{#messages.error}}
+          <div class="alert alert-danger" role="alert">
+            {{.}}
+          </div>
+      {{/messages.error}}
       <form class="login" action="/login/" method="post">
         <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" id="username-input" name="username" class="form-control">
+          <label for="username">Username:</label>
+          <input type="text" id="username-input" name="username" class="form-control" placeholder="Enter Username">
         </div>
+        <br>
         <div class="form-group">
-          <label for="password">Password</label>
-          <input type="text" name="password" id="password" class="form-control">
+          <label for="password">Password:</label>
+          <input type="password" name="password" id="password" class="form-control" placeholder="Enter Password">
         </div>
-        <button type="submit" name="button" class="btn btn-primary">Login</button>
+        <br>
+        <button type="submit" name="button" class="btn btn-primary middle">Login</button>
       </form>
-      <div class="">
+      <br>
+      <div class="middle">
         <a href="/register/">Click to Register</a>
       </div>
     </div>
