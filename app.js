@@ -166,6 +166,7 @@ app.post('/new_snippet', function (req, res) {
     req.getValidationResult()
         .then(function(result) {
             if (!result.isEmpty()) {
+                console.log(errors);
                 return res.render('new_snippet', {
                     user: user,
                     errors: result.mapped()
@@ -191,6 +192,7 @@ app.post('/new_snippet', function (req, res) {
 
             snippet.save(function(err) {
                 if (err) {
+                    console.log(err);
                     return res.render('new_snippet', {
                         messages: {
                             error: ["An error has occurred."]
