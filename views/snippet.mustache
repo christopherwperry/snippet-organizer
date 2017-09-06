@@ -11,10 +11,11 @@
     <div class="container">
       <fieldset>
         {{#snippet}}
-        <h1 class="page-title">{{title}}</h1>
+        <h1 class="page-title">Title: {{title}}</h1>
         <br>
-        <p>Body: {{body}}</p>
-        <p>Notes: {{notes}}</p>
+        <p>Body:</p> <textarea name="body" rows="8" cols="80" readonly>{{body}}</textarea>
+        <p>Notes:</p><textarea name="notes" rows="8" cols="80" readonly>{{notes}}</textarea>
+        <br>
         <p>Language: {{language}}</p>
         <p>Tags: {{tags}}</p>
         <p>

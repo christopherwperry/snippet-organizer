@@ -82,10 +82,7 @@ app.get('/', requireLogin, getSnippets, function (req, res) {
   const user = req.user;
   const author = req.user.username;
   const snippets = req.snippets;
-  console.log(user);
-  console.log(author);
-  console.log(snippets);
-    res.render('index', {user: user, snippets: snippets})
+  res.render('index', {user: user, snippets: snippets})
 })
 
 app.get('/login', function (req, res) {
@@ -154,37 +151,108 @@ app.get('/logout/', function(req, res) {
     res.redirect('/');
 });
 
-app.get('/new_snippet', requireLogin, function (req, res) {
-    const user = req.user;
+app.get('/new_snippet', function (req, res) {
+    user = req.user
+    console.log(user);
     res.render('new_snippet', {user: user})
 })
 
-app.get('/:title', requireLogin, function (req, res) {
-  const user = req.user;
-  const username = req.user.username;
-  const snippet = req.params.title;
-  Snippet.findOne({author: username, title: snippet}).then(function(snippet){
-    res.render('snippet', {user: user, snippet})
+app.post('/new_snippet', function (req, res) {
+    user = req.user
+    req.checkBody('title', 'Title is required').notEmpty();
+    req.checkBody('body', 'Body is required').notEmpty();
+    req.checkBody('language', 'Language is required').notEmpty();
+    console.log(req.getValidationResult());
+    req.getValidationResult()
+        .then(function(result) {
+            if (!result.isEmpty()) {
+                return res.render('new_snippet', {
+                    user: user,
+                    errors: result.mapped()
+                });
+            }
+            const snippet = new Snippet({
+                author: user.username,
+                password: req.body.password,
+                title: req.body.title,
+                body: req.body.body,
+                notes: req.body.notes,
+                language: req.body.language,
+                tags: req.body.tags
+            })
+
+            const error = snippet.validateSync();
+            if (error) {
+                return res.render('new_snippet', {
+                    user: user,
+                    errors: normalizeMongooseErrors(error.errors)
+                })
+            }
+
+            snippet.save(function(err) {
+                if (err) {
+                    return res.render('new_snippet', {
+                        messages: {
+                            error: ["An error has occurred."]
+                        }
+                    })
+                }
+                return res.redirect('/');
+            })
+        })
+    });
+
+app.get('/:title', function (req, res) {
+    user = req.user;
+    username = req.user.username;
+    snippet = req.params.title;
+    Snippet.find({author: username, title: snippet}).then(function(snippet){
+      res.render('snippet', {user: user, snippet: snippet})
   })
 })
 
-app.get('/:title/edit', requireLogin, function (req, res) {
-  const user = req.user;
-  const username = req.user.username;
-  const snippet = req.params.title;
-  Snippet.findOne({author: username, title: snippet}).then(function(snippet){
-    res.render('edit_snippet', {user: user, snippet})
+app.get('/:title/edit', function (req, res) {
+    user = req.user;
+    username = req.user.username;
+    snippet = req.params.title;
+    Snippet.findOne({author: username, title: snippet}).then(function(snippet){
+      res.render('edit_snippet', {user: user, snippet})
   })
 })
 
 app.post('/:title/edit', function (req, res) {
-  res.send('update snippet')
+    username = req.user.username;
+    snippet = req.params.title;
+    Snippet.findOne({author: username, title: snippet}).then(function (snippet){
+      snippet.author = username;
+      snippet.title = req.body.title;
+      snippet.body = req.body.body;
+      snippet.notes = req.body.notes;
+      snippet.language = req.body.language;
+      snippet.tags = req.body.tags;
+      const error = snippet.validateSync();
+      if (!error){
+        snippet.save();
+        res.redirect(`/${snippet.title}`)
+      } else {
+        console.log(error);
+        res.render('edit_snippet', {user: user, snippet: snippet, errors: error.errors})
+      }
+  })
 })
 
-app.post('/new_snippet', function (req, res) {
-    Snippet.create(req.body).then(function(){
-      res.redirect('/')
-    })
+app.get('/:language', function (req, res) {
+    language = req.params.language;
+
+})
+
+app.post('/:title/delete', function (req, res) {
+    console.log(req.user);
+    username = req.user.username;
+    snippet = req.params.title;
+    Snippet.remove({author: username, title: snippet}).then(function (snippet){
+      res.redirect('/');
+  })
 })
 
 app.listen(port, function(){
