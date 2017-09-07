@@ -213,6 +213,7 @@ app.get('/:title', function (req, res) {
   })
 })
 
+
 app.get('/:title/edit', function (req, res) {
     user = req.user;
     username = req.user.username;
@@ -243,9 +244,12 @@ app.post('/:title/edit', function (req, res) {
   })
 })
 
-app.get('/:language', function (req, res) {
-    language = req.params.language;
-
+app.get('/:language/all', function (req, res) {
+    user = req.user
+    code = req.params.language;
+    Snippet.find({language: code}).then(function(snippet){
+      res.render('language', {user: user, snippet: snippet})
+  })
 })
 
 app.post('/:title/delete', function (req, res) {

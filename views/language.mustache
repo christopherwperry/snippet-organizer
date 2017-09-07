@@ -3,27 +3,26 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>User Profile</title>
+    <title>Language Specific Snippets</title>
     <link rel="stylesheet" href="https://cdn.shoelace.style/1.0.0-beta20/shoelace.css">
     <link rel="stylesheet" type="text/css" href="style.css"/>
   </head>
   <body>
     <div class="container">
       {{#user}}
-      <h1 class="page-title">Code Snippets By <strong>{{username}}<strong></h1>
+      <h1 class="page-title">Code Snippets in <strong>{{language}}<strong></h1>
+        {{/user}}
       <ul>
-        {{#snippets}}
+        {{#snippet}}
         <fieldset>
           <div class="one-entry">
             <h3>Title: <a href="/{{title}}">{{title}}</a></h3>
-            <h4>Language: <a href="/{{language}}/all">{{language}}</a></h4>
+            <h4>Language: <a href="/{{language}}">{{language}}</a></h4>
             <h4>Tags: <a href="/{{tags}}">{{tags}}</a></h4>
           </div>
         </fieldset>
-        {{/snippets}}
+        {{/snippet}}
       </ul>
-
-      {{/user}}
       <p>
         <a class="button" href="/new_snippet">Add New Snippet</a>
       </p>
