@@ -271,6 +271,15 @@ app.post('/:snippet/delete', function (req, res) {
   })
 })
 
+app.get('/:tag/snippets', function (req, res) {
+  tag = req.params.tag
+  res.send(tag);
+  // Snippet.find({tags: {$in: ["tag"]}}.then(function (snippet, tag) {
+  //   res.render('tag', {snippet: snippet, tag})
+  // })
+  // )
+})
+
 app.post('/search', function (req, res) {
   search = req.body.search;
   console.log(search);
