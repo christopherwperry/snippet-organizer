@@ -12,6 +12,10 @@
       {{#user}}
       <h1 class="page-title">Code Snippets By <strong>{{username}}<strong></h1>
       <ul>
+        <form class="search" action="/search" method="post">
+          <input type="text" name="search" value="" placeholder="Search snippets by tag">
+          <button type="submit" name="button">Search</button>
+        </form>
         {{#snippets}}
         <fieldset>
           <div class="one-entry">

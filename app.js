@@ -179,7 +179,7 @@ app.post('/new_snippet', function (req, res) {
                 body: req.body.body,
                 notes: req.body.notes,
                 language: req.body.language,
-                tags: req.body.tags
+                tags: req.body.tags.replace(/\s/g, '').split(",")
             })
 
             const error = snippet.validateSync();
@@ -204,35 +204,45 @@ app.post('/new_snippet', function (req, res) {
         })
     });
 
-app.get('/:title', function (req, res) {
+app.get('/:snippet', function (req, res) {
     user = req.user;
     username = req.user.username;
-    snippet = req.params.title;
-    Snippet.find({author: username, title: snippet}).then(function(snippet){
-      res.render('snippet', {user: user, snippet: snippet})
+    grab = req.params.snippet;
+    Snippet.find({title: grab}).then(function(snippet){
+      if (username === snippet.author) {
+        let delete_snippet;
+        res.render('snippet', {user: user, snippet: snippet, delete_snippet})
+      } else {
+        res.render('snippet', {user: user, snippet: snippet})
+      }
   })
 })
 
-
-app.get('/:title/edit', function (req, res) {
+app.get('/:snippet/edit', function (req, res) {
     user = req.user;
     username = req.user.username;
-    snippet = req.params.title;
-    Snippet.findOne({author: username, title: snippet}).then(function(snippet){
-      res.render('edit_snippet', {user: user, snippet})
+    grab = req.params.snippet;
+    Snippet.findOne({title: grab}).then(function(snippet){
+      console.log(snippet);
+      if (snippet.author === username){
+        res.render('edit_snippet', {user: user, snippet})
+      } else {
+        delete_error = "You do not have authorization to edit this snippet.";
+        res.render('snippet', {user: user, snippet: snippet, delete_error})
+      }
   })
 })
 
-app.post('/:title/edit', function (req, res) {
+app.post('/:snippet/edit', function (req, res) {
     username = req.user.username;
-    snippet = req.params.title;
+    snippet = req.params.snippet;
     Snippet.findOne({author: username, title: snippet}).then(function (snippet){
       snippet.author = username;
       snippet.title = req.body.title;
       snippet.body = req.body.body;
       snippet.notes = req.body.notes;
       snippet.language = req.body.language;
-      snippet.tags = req.body.tags;
+      snippet.tags = req.body.tags.replace(/\s/g, '').split(",");
       const error = snippet.validateSync();
       if (!error){
         snippet.save();
@@ -252,12 +262,19 @@ app.get('/:language/all', function (req, res) {
   })
 })
 
-app.post('/:title/delete', function (req, res) {
+app.post('/:snippet/delete', function (req, res) {
     console.log(req.user);
     username = req.user.username;
-    snippet = req.params.title;
-    Snippet.remove({author: username, title: snippet}).then(function (snippet){
+    snippet = req.params.snippet;
+    Snippet.remove({author: username, title: snippet}).then(function (snippet) {
       res.redirect('/');
+  })
+})
+
+app.post('/search', function (req, res) {
+  search = req.body.search;
+  console.log(search);
+  Snippet.find({$text: {$search: searchString}}).then(function (snippet) {
   })
 })
 

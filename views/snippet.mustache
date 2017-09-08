@@ -12,6 +12,11 @@
       <fieldset>
         {{#snippet}}
         <h1 class="page-title">Title: {{title}}</h1>
+        {{#delete_error}}
+            <div class="alert alert-danger" role="alert">
+              {{delete_error}}
+            </div>
+        {{/delete_error}}
         <br>
         <p>Body:</p> <textarea name="body" rows="8" cols="80" readonly>{{body}}</textarea>
         <p>Notes:</p><textarea name="notes" rows="8" cols="80" readonly>{{notes}}</textarea>
@@ -21,9 +26,11 @@
         <p>
           <a href="/{{title}}/edit">Edit Snippet</a>
         </p>
-        <form class="delete" action="/{{title}}/delete" method="post">
-          <button type="submit" name="button">Delete Snippet</button>
-        </form>
+        {{#delete_snippet}}
+            <form class="delete" action="/{{title}}/delete" method="post">
+              <button type="submit" name="button">Delete Snippet</button>
+            </form>
+        {{/delete_snippet}}
         {{/snippet}}
         <br>
         <p>
